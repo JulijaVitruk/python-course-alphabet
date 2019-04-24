@@ -3,7 +3,6 @@ import random
 import string
 
 
-
 # we will work with such dicts
 ST = Dict[str, Union[str, int]]
 # and we will put this dicts in list
@@ -21,9 +20,9 @@ def task_1_fix_names_start_letter(data: DT) -> DT:
 
     def func(x: dict):
         ret = None
-        if x.get('name') is not None:
-            ret = x.get('name')[0].upper()+x.get('name')[1:]
-            x['name']=ret
+        if x.get('name'):
+            ret = x.get('name')[0].upper() + x.get('name')[1:]
+            x['name'] = ret
         return ret
 
     for y in range(len(data)):
@@ -64,14 +63,12 @@ def task_4_min_value_integers(data: List[int]) -> int:
     """
     find and return minimum value from list
     """
-    if bool(data) is True:
+    if data:
         our_min = min(data)
     else:
         our_min = None
 
     return our_min
-
-
 
 
 def task_5_min_value_strings(data: List[Union[str, int]]) -> str:
@@ -91,9 +88,7 @@ def task_6_min_value_list_of_dicts(data: DT, key: str) -> ST:
     """
     find minimum value by given key()lambda
     returns:
-
     """
-
     data1 = filter(lambda item: item.get(key) is not None, data)
     return min(data1, key=lambda item: item.get(key))
 
@@ -128,7 +123,6 @@ def task_9_sum_characters_positions(text: str) -> int:
     return sum([ord(text[i]) for i in range(len(text))])
 
 
-
 def task_10_generator_of_simple_numbers() -> Generator[int, None, None]:
     """
     return generator of simple numbers
@@ -147,7 +141,7 @@ def task_10_generator_of_simple_numbers() -> Generator[int, None, None]:
     i = 3
     while i <= 210:
         ost = [i % n[j] for j in range(len(n))]
-        if all(ost) is True:
+        if all(ost):
             yield i
             n.append(i)
             i += 1
@@ -155,17 +149,14 @@ def task_10_generator_of_simple_numbers() -> Generator[int, None, None]:
             i += 1
 
 
-
-
-
 def task_11_create_list_of_random_characters() -> List[str]:
     """
     create list of 20 elements where each element is random letter from latin alphabet
 
     """
-    list_of_rannum = [random.randint(0, len(string.ascii_lowercase)-1) for _ in range(20)]
+    list_of_ran_num = [random.randint(0, len(string.ascii_lowercase)-1) for _ in range(20)]
 
-    return [string.ascii_lowercase[list_of_rannum[x]] for x in range(20)]
+    return [string.ascii_lowercase[list_of_ran_num[x]] for x in range(20)]
 
 
 
