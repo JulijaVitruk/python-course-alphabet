@@ -1,6 +1,7 @@
 from typing import List, Dict, Union, Generator
 import random
 import string
+import functools
 
 
 # we will work with such dicts
@@ -18,17 +19,7 @@ def task_1_fix_names_start_letter(data: DT) -> DT:
         >>> [{'name': 'alex', 'age': 26}, {'name': 'denys', 'age': 89}]
     """
 
-    def func(x: dict):
-        ret = None
-        if x.get('name'):
-            ret = x.get('name')[0].upper() + x.get('name')[1:]
-            x['name'] = ret
-        return ret
-
-    for y in range(len(data)):
-        func(data[y])
-
-    return data
+    return [{'name': x['name'].title(), 'age':x['age']} for x in data if x.get('name')]
 
 
 def task_2_remove_dict_fields(data: DT, redundant_keys: List[str]) -> DT:
@@ -39,14 +30,8 @@ def task_2_remove_dict_fields(data: DT, redundant_keys: List[str]) -> DT:
        remove_dict_field([{'name': 'alex', 'age': 26}, {'name': 'denys', 'age': 89}], 'age')
         >>> [{'name': 'alex'}, {'name': 'denys'}]
     """
-    data1 = []
-    for a in range(len(data)):
-        our_dict = data[a]
-        for ke in redundant_keys:
-            del our_dict[ke]
-        data1.append(our_dict)
 
-    return data1
+    return [{y: x[y] for y in x if y not in redundant_keys} for x in data]
 
 
 def task_3_find_item_via_value(data: DT, value) -> DT:
@@ -63,12 +48,7 @@ def task_4_min_value_integers(data: List[int]) -> int:
     """
     find and return minimum value from list
     """
-    if data:
-        our_min = min(data)
-    else:
-        our_min = None
-
-    return our_min
+    return min(data, default = None)
 
 
 def task_5_min_value_strings(data: List[Union[str, int]]) -> str:
@@ -97,7 +77,7 @@ def task_7_max_value_list_of_lists(data: List[List[int]]) -> int:
     """
     find max value from list of lists
     """
-    return max(max(data))
+    return max(functools.reduce(lambda x, y: x+y, data))
 
 
 def task_8_sum_of_ints(data: List[int]) -> int:
@@ -117,7 +97,6 @@ def task_9_sum_characters_positions(text: str) -> int:
         >>> 65
         task_9_sum_characters_positions("hello")
         >>> 532
-
     """
 
     return sum([ord(text[i]) for i in range(len(text))])
@@ -154,11 +133,7 @@ def task_11_create_list_of_random_characters() -> List[str]:
     create list of 20 elements where each element is random letter from latin alphabet
 
     """
-    list_of_ran_num = [random.randint(0, len(string.ascii_lowercase)-1) for _ in range(20)]
-
-    return [string.ascii_lowercase[list_of_ran_num[x]] for x in range(20)]
-
-
+    return random.choices(string.ascii_lowercase, k=20)
 
 
 
