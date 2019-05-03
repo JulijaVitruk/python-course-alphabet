@@ -11,5 +11,6 @@ data_keys_1 = [f"Key is : {x}; Value is {y}" for x, y in data.items()]
 data = {k: v for v, k in enumerate(string.ascii_lowercase, start=1)}
 dict_if_syntax = {k: v for v, k in enumerate(string.ascii_lowercase, start=1) if v % 2 == 0}
 
-print(data)
+print(data_keys)
+print(data_keys_1)
 print(dict_if_syntax)

@@ -3,7 +3,7 @@ import os
 DATABASE = {
     "database": "cursor_db",
     "user": "cursor",
-    "password": "very_secret_password",
+    "password": "cursor",
     "port": 5432
 }
 
