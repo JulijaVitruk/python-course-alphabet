@@ -1,7 +1,7 @@
 import random
 import unittest
 
-from build_in_methods_iterators.homework1 import (
+from build_in_methods_iterators.homework2 import (
     task_4_min_value_integers,
     task_5_min_value_strings,
     task_6_min_value_list_of_dicts,

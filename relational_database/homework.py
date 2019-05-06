@@ -185,10 +185,11 @@ def task_13_list_products_from_sweden_suppliers(cur):
     Returns: 3 records
     """
     cur.execute("SELECT supplierid FROM suppliers WHERE(country LIKE 'Sweden%');")
-    supp_id_country = tuple(cur.fetchall())
+    supp_id_country = cur.fetchall()
     ids = [x[0] for x in supp_id_country]
     cur.execute("SELECT productname FROM products WHERE supplierid = ANY(%s);", (ids,))
-    return cur.fetchall()
+    res = cur.fetchall()
+    return [x[0] for x in res]
 
 
 def task_14_list_products_with_supplier_information(cur):
@@ -234,7 +235,7 @@ def task_16_match_all_customers_and_suppliers_by_country(cur):
     Returns: 194 records
     """
     cur.execute("""
-        SELECT customername, customers.address, customers.country, suppliers.country, suppliername 
+        SELECT customername, customers.address, customers.country as customercountry, suppliers.country as suppliercountry, suppliername 
         FROM customers FULL JOIN suppliers ON customers.country = suppliers.country
         ORDER BY customers.country;
     """)
