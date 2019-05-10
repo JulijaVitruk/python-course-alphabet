@@ -24,6 +24,11 @@ def task_1_add_new_record_to_db(con) -> None:
         cursor.execute("""INSERT INTO customers 
             VALUES (92, 'Thomas', 'David', 'Some Address', 'London', '774', 'Singapore'); 
             """)
+        con.commit()
+
+
+
+
 
 
 def task_2_list_all_customers(cur) -> list:
@@ -66,6 +71,7 @@ def task_4_update_customer(con):
         cursor.execute("""UPDATE customers 
             SET customername = 'Johnny Depp' WHERE customerid = 1 ;
             """)
+        con.commit()
 
 
 def task_5_delete_the_last_customer(con) -> None:
@@ -77,6 +83,7 @@ def task_5_delete_the_last_customer(con) -> None:
     """
     with con.cursor() as cursor:
         cursor.execute("DELETE FROM customers WHERE customerid = 91;")
+        con.commit()
 
 
 def task_6_list_all_supplier_countries(cur) -> list:
