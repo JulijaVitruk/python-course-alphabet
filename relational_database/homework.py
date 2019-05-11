@@ -24,6 +24,11 @@ def task_1_add_new_record_to_db(con) -> None:
         cursor.execute("""INSERT INTO customers 
             VALUES (92, 'Thomas', 'David', 'Some Address', 'London', '774', 'Singapore'); 
             """)
+        con.commit()
+
+
+
+
 
 
 def task_2_list_all_customers(cur) -> list:
@@ -66,6 +71,7 @@ def task_4_update_customer(con):
         cursor.execute("""UPDATE customers 
             SET customername = 'Johnny Depp' WHERE customerid = 1 ;
             """)
+        con.commit()
 
 
 def task_5_delete_the_last_customer(con) -> None:
@@ -77,6 +83,7 @@ def task_5_delete_the_last_customer(con) -> None:
     """
     with con.cursor() as cursor:
         cursor.execute("DELETE FROM customers WHERE customerid = 91;")
+        con.commit()
 
 
 def task_6_list_all_supplier_countries(cur) -> list:
@@ -184,12 +191,11 @@ def task_13_list_products_from_sweden_suppliers(cur):
 
     Returns: 3 records
     """
-    cur.execute("SELECT supplierid FROM suppliers WHERE(country LIKE 'Sweden%');")
-    supp_id_country = cur.fetchall()
-    ids = [x[0] for x in supp_id_country]
-    cur.execute("SELECT productname FROM products WHERE supplierid = ANY(%s);", (ids,))
-    res = cur.fetchall()
-    return [x[0] for x in res]
+    cur.execute("""SELECT productname 
+        FROM products WHERE supplierid 
+        IN (SELECT supplierid FROM suppliers WHERE country = 'Sweden')
+        """)
+    return cur.fetchall()
 
 
 def task_14_list_products_with_supplier_information(cur):
@@ -235,9 +241,10 @@ def task_16_match_all_customers_and_suppliers_by_country(cur):
     Returns: 194 records
     """
     cur.execute("""
-        SELECT customername, customers.address, customers.country as customercountry, suppliers.country as suppliercountry, suppliername 
-        FROM customers FULL JOIN suppliers ON customers.country = suppliers.country
-        ORDER BY customers.country;
+        SELECT customers.customername, customers.address, customers.country as customercountry, suppliers.country as suppliercountry, suppliers.suppliername 
+        FROM customers FULL JOIN suppliers ON customers.country = suppliers.country 
+        ORDER BY customers.country, suppliers.country;
     """)
-
     return cur.fetchall()
+
+
