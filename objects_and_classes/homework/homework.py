@@ -8,6 +8,8 @@ import constants
 Звязкок наступний один колекціонер може мати багато гаражів.
 В одному гаражі може знаходитися багато автомобілів.
 """
+
+
 class Car:
     """
     Автомобіль має наступні характеристики:
@@ -62,7 +64,8 @@ class Car:
         # Метод заміни номеру
         self.number = uuid.uuid4().hex
 
-print("Work with Cars")
+
+print("\nWork with Cars")
 car1 = Car(23, 'SUV', 'Lamborghini', 765)
 car2 = Car(34, "Sedan", "Ford", 1042)
 print(car1.number, car1.car_type, car1.mileage, car1.price, car1.producer)
@@ -135,12 +138,13 @@ class Garage:
         else: print("This car is not in garage")
 
     def hit_hat(self):
-        return sum([car.price for car in self.cars])
+        return sum([x.price for x in self.cars])
 
     def count(self):
         return len(self.cars)
 
-print("Work with Garages")
+
+print("\n Work with Garages")
 garage1 = Garage('Kiev', 10)
 print(garage1.cars)
 garage1.add(car1)
@@ -190,8 +194,8 @@ class Cesar:
 
     def __next__(self):
 
-        if self.current < len(self.cars):
-            res = self.cars[self.current]
+        if self.current < len(self.garages):
+            res = self.garages[self.current]
             self.current += 1
             return res
         else:
@@ -199,10 +203,10 @@ class Cesar:
             raise StopIteration
 
     def __contains__(self, item):
-            return item in self.cars
+            return item in self.garages
 
     def hit_hat(self):
-        return sum([garage.hit_hat() for garage in self.garages])
+        return sum([x.hit_hat() for x in self.garages])
 
     def __eq__(self, other: Cesar):
         return other.hit_hat() == self.hit_hat()
@@ -222,27 +226,27 @@ class Cesar:
     def garages_count(self):
         return len(self.garages)
 
-    def сars_count(self):
+    def cars_count(self):
         return sum([garage.count() for garage in self.garages])
 
-    def add_car(self, car: Car, garage=None):
-        if garage in self.garages:
+    def add_car(self, car: Car, garage: None):
+        if garage is not None:
             garage.add(car)
         else:
-            List_garage_count = [garage.count for garage in self.garages]
-            if garage.count == min(List_garage_count):
-                garage.add(car)
+            list_garage_count = [x.count() for x in self.garages]
+            garage = self.garages[list_garage_count.index(min(list_garage_count))]
+            garage.add(car)
 
 
-print("Work with Cesar")
-garage2 = Garage('Kiev', 2, car2)
+print("\nWork with Cesar")
+garage2 = Garage('Kiev', 2, [car2])
 cesar1 = Cesar('Harrison Ford', [garage1, garage2])
 print(cesar1.name, cesar1.garages)
 print(cesar1.hit_hat())
 print(cesar1.garages_count())
 print(cesar1.cars_count())
 car4 = Car(25, 'Sedan', 'BMW', 450)
-cesar1.add_car(car4)
-
+cesar1.add_car(car4, garage1)
+print(cesar1.hit_hat())
 
 
