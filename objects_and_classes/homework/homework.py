@@ -1,13 +1,7 @@
 from __future__ import annotations
 from typing import List
 import uuid
-import constants
-
-"""
-Вам небхідно написати 3 класи. Колекціонери Гаражі та Автомобілі.
-Звязкок наступний один колекціонер може мати багато гаражів.
-В одному гаражі може знаходитися багато автомобілів.
-"""
+from constants import CARS_PRODUCER, CARS_TYPES, TOWNS
 
 
 class Car:
@@ -24,26 +18,21 @@ class Car:
 
     Автомобіль має метод заміни номеру. номер повинен відповідати UUID
     """
-    def __init__(self, price: float, car_type, producer, mileage: float) -> None:
+    def __init__(self, price: float, car_type: str, producer: str, mileage: float) -> None:
+
+        assert type(price) is float, 'Value of price must be float'
         self.price = price
+
         self.number = uuid.uuid4().hex
+
+        assert type(mileage) is float, 'Value of mileage must be float'
         self.mileage = mileage
-        if car_type in constants.CARS_TYPES:
-            self.car_type = car_type
-        else:
-            print("Value of car_type must be in CARS_TYPES:",constants.CARS_TYPES)
-            raise ValueError
 
-        if producer in constants.CARS_PRODUCER:
-            self.producer = producer
-        else:
-            print("Value of producer must be in CARS_PRODUCER",constants.CARS_PRODUCER)
-            raise ValueError
-        print("We create new car", self.price, self.car_type, self.producer, self.mileage, self.number)
+        assert car_type in CARS_TYPES, "Value of car_type must be in CARS_TYPES: %s" % CARS_TYPES
+        self.car_type = car_type
 
-    def __new__(cls, *args, **kwargs):
-        obj = super(Car, cls).__new__(cls)
-        return obj
+        assert producer in CARS_PRODUCER, "Value of producer must be in CARS_PRODUCER: %s" % CARS_PRODUCER
+        self.producer = producer
 
     def __eq__(self, other: Car):
         return other.price == self.price
@@ -64,14 +53,9 @@ class Car:
         # Метод заміни номеру
         self.number = uuid.uuid4().hex
 
-
-print("\nWork with Cars")
-car1 = Car(23, 'SUV', 'Lamborghini', 765)
-car2 = Car(34, "Sedan", "Ford", 1042)
-print(car1.number, car1.car_type, car1.mileage, car1.price, car1.producer)
-print(car1 <= car2)
-car1.change_number()
-print(car1.number)
+    def __str__(self):
+        return str(self.price) + " " + str(self.car_type) + " " + str(self.producer) + " " + str(self.mileage) + " "\
+               + str(self.number)
 
 
 class Garage:
@@ -91,24 +75,19 @@ class Garage:
     """
     cars: List[Car]
 
-    def __init__(self, town, places: int, cars=None):
+    def __init__(self, town: str, places: int, cars=None):
 
-        if town in constants.TOWNS:
-            self.town = town
-        else:
-            print("Value of town must be in TOWNS:",constants.TOWNS)
-            raise ValueError
+        assert town in TOWNS, "Value of town must be in TOWNS: %s" % TOWNS
+        self.town = town
 
+        assert type(places) is int, 'Value of places must be integer'
         self.places = places
+
         self.cars = cars if cars is not None else []
+
         self.owner = uuid.uuid4().hex
+
         self.current = 0
-
-    def __new__(cls, *args, **kwargs):
-
-        print("We create new garage")
-        obj = super(Garage, cls).__new__(cls)
-        return obj
 
     def __iter__(self):
         return self
@@ -124,7 +103,10 @@ class Garage:
             raise StopIteration
 
     def __contains__(self, item):
-            return item in self.cars
+        return item in self.cars
+
+    def __str__(self):
+        return str(self.town) + ' ' + str(self.places) + ' ' + str(self.owner)
 
     def add(self, new_car: Car):
         if len(self.cars) < self.places:
@@ -135,27 +117,14 @@ class Garage:
     def remove(self, car: Car):
         if car in self.cars:
             self.cars.remove(car)
-        else: print("This car is not in garage")
+        else:
+            print("This car is not in garage")
 
     def hit_hat(self):
         return sum([x.price for x in self.cars])
 
     def count(self):
         return len(self.cars)
-
-
-print("\n Work with Garages")
-garage1 = Garage('Kiev', 10)
-print(garage1.cars)
-garage1.add(car1)
-garage1.add(car2)
-car3 = Car(45, "Sedan", "Ford", 200)
-garage1.add(car3)
-print(garage1.cars)
-print(garage1.hit_hat())
-garage1.remove(car2)
-for i in garage1:
-    print(i.producer, i.car_type, i.price)
 
 
 class Cesar:
@@ -178,16 +147,12 @@ class Cesar:
 
     def __init__(self, name: str, garages=None):
 
+        assert type(name) is str, 'Value of name must be string'
         self.name = name
+
         self.garages = garages if garages is not None else []
         self.register_id = uuid.uuid4().hex
         self.current = 0
-
-    def __new__(cls, *args, **kwargs):
-
-        print("We create new cesar")
-        obj = super(Cesar, cls).__new__(cls)
-        return obj
 
     def __iter__(self):
         return self
@@ -203,7 +168,7 @@ class Cesar:
             raise StopIteration
 
     def __contains__(self, item):
-            return item in self.garages
+        return item in self.garages
 
     def hit_hat(self):
         return sum([x.hit_hat() for x in self.garages])
@@ -223,6 +188,9 @@ class Cesar:
     def __gt__(self, other: Cesar):
         return self.hit_hat() > other.hit_hat()
 
+    def __str__(self):
+        return str(self.name) + ' ' + str(self.register_id)
+
     def garages_count(self):
         return len(self.garages)
 
@@ -238,15 +206,40 @@ class Cesar:
             garage.add(car)
 
 
-print("\nWork with Cesar")
-garage2 = Garage('Kiev', 2, [car2])
-cesar1 = Cesar('Harrison Ford', [garage1, garage2])
-print(cesar1.name, cesar1.garages)
-print(cesar1.hit_hat())
-print(cesar1.garages_count())
-print(cesar1.cars_count())
-car4 = Car(25, 'Sedan', 'BMW', 450)
-cesar1.add_car(car4, garage1)
-print(cesar1.hit_hat())
+if __name__ == '__main__':
+    print("\nWork with Cars")
 
+    car1 = Car(23.0, 'SUV', 'Lamborghini', 765.4)
+    car2 = Car(34.0, "Sedan", "Ford", 1042.9)
+    print(car1)
+    print(car2)
+    print(car1 <= car2)
+    car1.change_number()
+    print(car1)
+
+    print("\nWork with Garages")
+    garage1 = Garage("Kiev", 45)
+    print(garage1)
+    garage1.add(car1)
+    garage1.add(car2)
+    car3 = Car(45.0, "Sedan", "Ford", 200.0)
+    garage1.add(car3)
+    print(garage1.hit_hat())
+    for i in garage1:
+        print(i.producer, i.car_type, i.price)
+    garage1.remove(car2)
+    for i in garage1:
+        print(i.producer, i.car_type, i.price)
+
+    print("\nWork with Cesar")
+    garage2 = Garage('Kiev', 2, [car2])
+    cesar1 = Cesar('Harrison Ford', [garage1, garage2])
+    print(cesar1)
+    print(cesar1.name, cesar1.garages)
+    print(cesar1.hit_hat())
+    print(cesar1.garages_count())
+    print(cesar1.cars_count())
+    car4 = Car(25.5, 'Sedan', 'BMW', 450.8)
+    cesar1.add_car(car4, garage1)
+    print(cesar1.hit_hat())
 
