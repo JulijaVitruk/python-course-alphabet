@@ -313,11 +313,12 @@ class House:
         if width == 0 or height == 0:
             raise ValueError("Value must be not 0")
 
+        if len(self.__walls) == 4:
+            raise ValueError("Our house can not have more than 4 walls")
+
         wall = Wall(width, height)
         self.__walls.append(wall)
 
-        if len(self.__walls) > 4:
-            raise ValueError("Our house can not have more than 4 walls")
 
     def create_roof(self, width, height, roof_type):
 
@@ -378,7 +379,22 @@ class House:
         if roll_width_m == 0 or roll_length_m == 0:
             raise ValueError("Sorry length must be not 0")
 
-        return sum([x.number_of_rolls_of_wallpaper(roll_width_m, roll_length_m) for x in self.__walls])
+        return int(sum([x.number_of_rolls_of_wallpaper(roll_width_m, roll_length_m) for x in self.__walls]))
 
     def get_room_square(self):
         return self.get_walls_square()-self.get_windows_square()-self.get_door_square()
+
+
+if __name__ == '__main__':
+
+    house1 = House()
+    house1.create_wall(10.0, 2.5)
+    house1.create_wall(10.0, 2.5)
+    house1.create_wall(14.0, 2.5)
+    house1.create_wall(14.0, 2.5)
+    house1.create_roof(10, 6, "single-pitch")
+    house1.create_door(1, 2)
+    house1.create_window(3, 1)
+
+    print(house1.get_number_of_rolls_of_wallpapers(0.53, 10))
+    print(house1.get_room_square())
