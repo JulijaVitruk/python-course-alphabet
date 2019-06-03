@@ -5,7 +5,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-with open('movies.json') as f:
+with open('template_language/homework/movies.json') as f:
     MOVIES = json.load(f)
 
 

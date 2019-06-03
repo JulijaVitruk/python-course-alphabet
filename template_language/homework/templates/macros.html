@@ -1,0 +1,36 @@
+{% macro nav_link(endpoint, name) %}
+{% if request.endpoint.endswith(endpoint) %}
+  <li class="active"><a href="/{{ url_for(endpoint) }}">{{name}}</a></li>
+{% else %}
+  <li><a href="{{ url_for(endpoint) }}">{{name}}</a></li>
+{% endif %}
+{% endmacro %}
+
+{% macro movie_card(movie) %}
+<div class="col-sm-6">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-lg-4">
+                        <a href="/{{ movie["title"] }}">
+                           <img src={{ movie["poster"] }}
+                                 class="card-img" alt={{ movie["title"] }}>
+                        </a>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="/{{ movie["title"] }}">{{ movie["title"] }}</a>
+                            </h5>
+                            <p class="card-text">
+                                {{ movie["plot"] }}
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">{{ movie["year"] }}</small>
+                                <small class="text-muted">{{ movie["director"] }}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endmacro %}
