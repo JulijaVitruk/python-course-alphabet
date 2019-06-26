@@ -1,0 +1,22 @@
+{
+    "town": "Rome",
+    "places": 17,
+    "cars": [
+        {
+            "price": 45.0,
+            "car_type": "Sedan",
+            "producer": "Ford",
+            "mileage": 200.0,
+            "number": "af24dae69c094ed580463aaab7e5845f"
+        },
+        {
+            "price": 14.6,
+            "car_type": "Sedan",
+            "producer": "Ford",
+            "mileage": 560.7,
+            "number": "601008e19d5c4c6f975212d71341cd88"
+        }
+    ],
+    "owner": "345bbb4cdbf2467187f337fc32b1b5f9",
+    "current": 0
+}

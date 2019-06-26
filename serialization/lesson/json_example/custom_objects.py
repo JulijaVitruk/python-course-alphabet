@@ -14,7 +14,7 @@ class Programmer:
 
     def __str__(self):
         return f"Programmer. Name: {self.name}." \
-            f"Lang :{self.language}; Postion: {self.position} developer"
+            f"Lang :{self.language}; Position: {self.position} developer"
 
     @classmethod
     def from_json(cls, data):
@@ -31,7 +31,7 @@ class Programmer:
         return data
 
 
-def from_json(data):
+'''def from_json(data):
     name = data['name']
     language = data['language']
     position = data['position']
@@ -43,6 +43,7 @@ def from_json(data):
 def to_json(obj: Programmer):
     data = {"name": obj.name, "language": obj.language, "position": obj.position}
     return data
+'''
 
 
 if __name__ == "__main__":
@@ -59,7 +60,7 @@ if __name__ == "__main__":
 
     # # Should work fine. Use custom json decoder
     try:
-        ser_pr = json.dumps(programmer, default=to_json)
+        ser_pr = json.dumps(programmer, default=Programmer.to_json)
         print("Success")
         print(type(ser_pr), ser_pr)
     except TypeError as e:

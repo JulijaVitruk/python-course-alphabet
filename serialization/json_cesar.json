@@ -1,0 +1,51 @@
+{
+    "name": "Vitruk Julija",
+    "garages": [
+        {
+            "town": "Rome",
+            "places": 17,
+            "cars": [
+                {
+                    "price": 45.0,
+                    "car_type": "Sedan",
+                    "producer": "Ford",
+                    "mileage": 200.0,
+                    "number": "af24dae69c094ed580463aaab7e5845f"
+                },
+                {
+                    "price": 14.6,
+                    "car_type": "Sedan",
+                    "producer": "Ford",
+                    "mileage": 560.7,
+                    "number": "601008e19d5c4c6f975212d71341cd88"
+                }
+            ],
+            "owner": "345bbb4cdbf2467187f337fc32b1b5f9",
+            "current": 0
+        },
+        {
+            "town": "Rome",
+            "places": 17,
+            "cars": [
+                {
+                    "price": 45.0,
+                    "car_type": "Sedan",
+                    "producer": "Ford",
+                    "mileage": 200.0,
+                    "number": "af24dae69c094ed580463aaab7e5845f"
+                },
+                {
+                    "price": 14.6,
+                    "car_type": "Sedan",
+                    "producer": "Ford",
+                    "mileage": 560.7,
+                    "number": "601008e19d5c4c6f975212d71341cd88"
+                }
+            ],
+            "owner": "345bbb4cdbf2467187f337fc32b1b5f9",
+            "current": 0
+        }
+    ],
+    "register_id": "15a346aad252434ab80d6bb7f4c29168",
+    "current": 0
+}

@@ -1,9 +1,9 @@
 from pprint import pprint
 from copy import deepcopy
-from lesson.json_example.json_utils import JsonEncoder, json_hook
+from json_utils import JsonEncoder, json_hook
 import json
 
-from lesson.some_data import DATA
+from serialization.lesson.some_data import DATA
 
 
 def show_me(data: dict) -> None:
@@ -12,15 +12,15 @@ def show_me(data: dict) -> None:
 
 
 def print_separator() -> None:
-    print("\n" * 3)
+    print("\n")
     print("-" * 20)
 
 
 if __name__ == "__main__":
     # Lets see what we have in DATA
     print("GIVEN DATA")
-    # show_me(DATA)
-    print(type(DATA))
+    #show_me(DATA)
+    print(type(DATA), 'DATA = ', DATA)
     print_separator()
     # Lets see how json like string will look like
     json_formatted_str = json.dumps(DATA)
@@ -30,7 +30,8 @@ if __name__ == "__main__":
 
     restored_data = eval(json_formatted_str)
 
-    print(type(restored_data))
+
+    print(type(restored_data), 'restored data =', restored_data)
     print_separator()
 
     # Lets dump json data to file
@@ -44,7 +45,7 @@ if __name__ == "__main__":
 
     with open("formatted_data.json", 'r') as file:
         restored_data = json.load(file)
-        print(restored_data)
+        print('Restored data', restored_data)
     #
     # # Lets see restored data from string
     restored_data = json.loads(json_formatted_str)

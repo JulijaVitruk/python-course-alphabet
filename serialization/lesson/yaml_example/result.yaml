@@ -4,7 +4,7 @@ database:
   password: very_secret_password
   port: 5432
 
-programmer:
+Programmer:
   name: Denis
   language: Python
   position: Senior

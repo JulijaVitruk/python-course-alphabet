@@ -28,6 +28,10 @@ if __name__ == "__main__":
     with open("data.txt", "wb") as file:
         pickle.dump(programmer, file)
 
+    fg = pickle.dumps(programmer)
+    print(fg)
+    programmer1 = pickle.loads(fg)
+    print(programmer1)
     # Lets load it
     with open("data.txt", "rb") as file:
         restore_obj = pickle.load(file)

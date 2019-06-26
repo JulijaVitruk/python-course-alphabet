@@ -55,4 +55,4 @@ if __name__ == "__main__":
     programmer_2 = Programmer.from_json({"name": "Anton"})
     print(Programmer.programmers_count)
 
-    Programmer.print_hello()
+    Programmer.print_hello('ginga')
